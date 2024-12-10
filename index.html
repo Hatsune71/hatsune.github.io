@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload File Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    input[type="file"] {
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Upload File</h1>
+  <p>Pilih file yang akan diunggah ke Google Drive dan hubungkan dengan data dari Spreadsheet:</p>
+
+  <!-- Formulir Upload File -->
+  <form id="uploadForm" onsubmit="handleUpload(event)">
+    <label for="fileInput">Pilih File:</label>
+    <br>
+    <input type="file" id="fileInput" required>
+    <br>
+    <label for="rowData">Pilih Baris Data dari Spreadsheet:</label>
+    <br>
+    <select id="rowData" required>
+      <option value="">-- Pilih Data --</option>
+      <!-- Contoh data statis, Anda dapat mengganti ini dengan data dari Spreadsheet -->
+      <option value="1">ID: 1 - Nama: Contoh Data 1</option>
+      <option value="2">ID: 2 - Nama: Contoh Data 2</option>
+      <option value="3">ID: 3 - Nama: Contoh Data 3</option>
+    </select>
+    <br><br>
+    <button type="submit">Upload</button>
+  </form>
+
+  <h2>Log Upload</h2>
+  <table id="logTable">
+    <thead>
+      <tr>
+        <th>Nama File</th>
+        <th>ID Data</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Log akan ditambahkan di sini -->
+    </tbody>
+  </table>
+
+  <script>
+    // Fungsi untuk menangani pengunggahan file
+    function handleUpload(event) {
+      event.preventDefault();
+
+      const fileInput = document.getElementById('fileInput');
+      const rowData = document.getElementById('rowData');
+      const logTable = document.getElementById('logTable').getElementsByTagName('tbody')[0];
+
+      if (!fileInput.files.length) {
+        alert('Pilih file terlebih dahulu!');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const selectedRow = rowData.options[rowData.selectedIndex].text;
+
+      // Simulasikan pengunggahan
+      const newRow = logTable.insertRow();
+      const fileNameCell = newRow.insertCell(0);
+      const rowDataCell = newRow.insertCell(1);
+      const statusCell = newRow.insertCell(2);
+
+      fileNameCell.textContent = file.name;
+      rowDataCell.textContent = selectedRow;
+      statusCell.textContent = 'Berhasil diunggah';
+
+      // Reset formulir
+      fileInput.value = '';
+      rowData.value = '';
+    }
+  </script>
+</body>
+</html>
